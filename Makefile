@@ -1,3 +1,8 @@
+##@ Build
+server/dist/server: $(shell find server)
+	@mkdir -p server/dist
+	@cd server && go build -o dist/server main.go
+
 ##@ Help
 .PHONY: help
 help: ## Display this help.
