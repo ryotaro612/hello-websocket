@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
 
-  useState(() => {
-    new WebSocket('ws://localhost:3000');
+  useEffect(() => {
+    new WebSocket('ws://localhost:8080/ws');
   }, []);
   return (
     <>

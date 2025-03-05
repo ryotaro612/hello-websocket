@@ -2,21 +2,18 @@ package main
 
 import (
 	"flag"
+	"log/slog"
+	"net/http"
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"log/slog"
-	"os"
 )
 
 var port *int
 
 func init() {
 	port = flag.Int("port", -1, "port to listen on")
-}
-
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
 }
 
 // https://github.com/gin-gonic/examples/blob/master/websocket/server/server.go
@@ -30,6 +27,15 @@ func main() {
 			"message": "pong",
 		})
 	})
+
+	upgrader := websocket.Upgrader{
+		// CORS
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
+	}
 	r.GET("ws", func(c *gin.Context) {
 		w, r := c.Writer, c.Request
 		conn, err := upgrader.Upgrade(w, r, nil)

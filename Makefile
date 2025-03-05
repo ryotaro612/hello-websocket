@@ -1,6 +1,6 @@
 ##@ Run
 .PHONY: server
-server: server/dist/server
+run-server: server/dist/server
 	cd server && ./dist/server
 
 ##@ Build
