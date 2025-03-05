@@ -1,7 +1,17 @@
+##@ Run
+.PHONY: server
+server: server/dist/server
+	cd server && ./dist/server
+
 ##@ Build
 server/dist/server: $(shell find server)
-	@mkdir -p server/dist
-	@cd server && go build -o dist/server main.go
+	mkdir -p server/dist
+	cd server && go build -o dist/server main.go
+
+##@ Clean
+.PHONY: clean
+clean: ## Clean up all generated files.
+	rm -rf server/dist
 
 ##@ Help
 .PHONY: help
